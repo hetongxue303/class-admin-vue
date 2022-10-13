@@ -1,5 +1,7 @@
 # 高校选课系统
 
+[![OSCS Status](https://www.oscs1024.com/platform/badge/hetongxue303/class-admin-vue.git.svg?size=small)](https://www.murphysec.com/dr/c9FvFpYEaV1eFO7qdf)
+
 ## 初始化项目
 
 - 新建项目
