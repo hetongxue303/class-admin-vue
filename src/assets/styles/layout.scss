@@ -1,0 +1,84 @@
+@import "variable.scss";
+
+/****************************** sidebar相关 ******************************/
+
+/****************************** header相关 ******************************/
+// 父容器
+.header-parent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  // 左布局
+  .left {
+    width: 50%;
+    display: flex;
+    justify-content: start;
+  }
+
+  // 右布局
+  .right {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+
+  }
+}
+
+// 图标组件公共样式
+.collapse-content,
+.full-screen {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(245, 245, 245, 0.8);
+  }
+}
+
+// 个人中心组件
+.components-center {
+  width: 100px;
+  height: 49px;
+  margin-bottom: 1px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(245, 245, 245, 0.8);
+  }
+
+  .center-username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 12px;
+  }
+}
+
+// 组件间距
+.components-space {
+  margin-right: 5px;
+}
+
+/****************************** footer相关 ******************************/
+.footer-text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  span, .el-link {
+    color: #7A8B9A;
+    font: 12px Arial, sans-serif;
+  }
+}
