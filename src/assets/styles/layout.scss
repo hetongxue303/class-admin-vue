@@ -22,7 +22,6 @@
     width: 50%;
     display: flex;
     justify-content: end;
-
   }
 }
 
@@ -77,8 +76,9 @@
   justify-content: start;
   align-items: center;
 
-  span, .el-link {
-    color: #7A8B9A;
+  span,
+  .el-link {
+    color: #7a8b9a;
     font: 12px Arial, sans-serif;
   }
 }

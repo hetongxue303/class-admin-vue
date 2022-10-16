@@ -1,18 +1,14 @@
 <template>
-  <div class="tabs-parent">
-
-  </div>
+  <div class="tabs-parent"></div>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .tabs-parent {
   height: 30px;
   width: 100%;
-  background-color: #7A8B9A;
+  background-color: #7a8b9a;
 }
 
 .tabs > .el-tabs__content {

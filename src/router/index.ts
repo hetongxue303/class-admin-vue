@@ -1,36 +1,35 @@
-import {createRouter, createWebHistory, RouteRecordRaw, useRoute} from 'vue-router'
-import routes from './routes'
-import NProgress from '../plugins/nProgress'
-import {getToken} from "../utils/auth";
+import { createRouter, createWebHistory, RouteRecordRaw, useRoute } from "vue-router";
+import routes from "./routes";
+import NProgress from "../plugins/nProgress";
+import { getToken } from "../utils/auth";
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+  history: createWebHistory(),
+  routes
+});
 
-let WITHE_LIST: string[] = ['/login']
+let WITHE_LIST: string[] = ["/login"];
 
 router.beforeEach((to, from, next) => {
-    NProgress.start()
+  NProgress.start();
 
-    if (getToken()) {
-        if (WITHE_LIST.indexOf(to.path)) {
-            next()
-        } else {
-            next('/')
-        }
+  if (getToken()) {
+    if (WITHE_LIST.indexOf(to.path)) {
+      next();
     } else {
-        if (to.meta.requireAuth) {
-            next('/login')
-        } else {
-            next()
-        }
+      next("/");
     }
+  } else {
+    if (to.meta.requireAuth) {
+      next("/login");
+    } else {
+      next();
+    }
+  }
 
-    NProgress.done()
-})
+  NProgress.done();
+});
 
-router.afterEach(() => {
-})
+router.afterEach(() => {});
 
-export default router
+export default router;

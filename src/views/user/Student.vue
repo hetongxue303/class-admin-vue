@@ -1,11 +1,5 @@
-<template>
-  用户管理
-</template>
+<template>用户管理</template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -11,14 +11,8 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "useDefineForClassFields": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "types": [
-      "node",
-      "vite/client"
-    ]
+    "lib": ["esnext", "dom"],
+    "types": ["node", "vite/client"]
   },
   "skipLibCheck": true,
   "noImplicitAny": true,
@@ -27,29 +21,13 @@
   "suppressImplicitAnyIndexErrors": true,
   "baseUrl": ".",
   "paths": {
-    "@": [
-      "src"
-    ],
-    "@views": [
-      "src/views"
-    ],
-    "@layout": [
-      "src/layout"
-    ],
-    "@components": [
-      "src/components"
-    ]
+    "@": ["src"],
+    "@views": ["src/views"],
+    "@layout": ["src/layout"],
+    "@components": ["src/components"]
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "vite.config.ts"
-  ],
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "vite.config.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"

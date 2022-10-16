@@ -1,11 +1,5 @@
-<template>
-  关于系统
-</template>
+<template>关于系统</template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

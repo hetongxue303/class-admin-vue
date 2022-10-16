@@ -2,26 +2,25 @@
   <el-dropdown trigger="hover">
     <span class="el-dropdown-link">
       <div class="components-center">
-        <el-avatar shape="circle"
-                   :size="30"
-                   src="https://p26-passport.byteacctimg.com/img/user-avatar/7eb085af8382dfa92ed6fb9a4aea448c~300x300.image"/>
-   <span class="center-username">管理员</span>
-    </div>
+        <el-avatar
+          shape="circle"
+          :size="30"
+          src="https://p26-passport.byteacctimg.com/img/user-avatar/7eb085af8382dfa92ed6fb9a4aea448c~300x300.image"
+        />
+        <span class="center-username">管理员</span>
+      </div>
     </span>
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item>布局设置</el-dropdown-item>
         <el-dropdown-item>个人中心</el-dropdown-item>
-        <el-dropdown-item divided @click="dialogVisible=true">退出登录</el-dropdown-item>
+        <el-dropdown-item divided @click="dialogVisible = true">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
 
   <!--对话框-->
-  <el-dialog
-      v-model="dialogVisible"
-      title="确认退出"
-      width="35%">
+  <el-dialog v-model="dialogVisible" title="确认退出" width="35%">
     <span>是否确认退出系统？</span>
     <template #footer>
       <span class="dialog-footer">
@@ -33,31 +32,29 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import {useRouter} from 'vue-router'
-import {useUserStore} from '../../../store/modules/user'
-import {logout} from '../../../api/user'
-import {ElMessage} from 'element-plus'
-import {removeToken} from '../../../utils/auth'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../../store/modules/user";
+import { logout } from "../../../api/user";
+import { ElMessage } from "element-plus";
+import { removeToken } from "../../../utils/auth";
 
-const router = useRouter()
-const userStore = useUserStore()
-const dialogVisible = ref(false)
+const router = useRouter();
+const userStore = useUserStore();
+const dialogVisible = ref(false);
 
 const handlerLogout = async () => {
-  const {data} = await logout()
+  const { data } = await logout();
   switch (data.code as number) {
     case 200:
-      removeToken()
-      ElMessage.success('注销成功')
-      await router.replace('/login')
-      break
+      removeToken();
+      ElMessage.success("注销成功");
+      await router.replace("/login");
+      break;
     default:
-      ElMessage.error('注销失败')
+      ElMessage.error("注销失败");
   }
-}
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

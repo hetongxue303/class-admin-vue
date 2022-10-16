@@ -1,11 +1,5 @@
-<template>
-  课程编辑
-</template>
+<template>课程编辑</template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
