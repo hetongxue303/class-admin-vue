@@ -10,13 +10,11 @@
 <script setup lang="ts">
 const toggleFullScreen = () => {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
+    document.documentElement.requestFullscreen()
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen()
   }
-};
+}
 </script>
 
 <style scoped lang="scss"></style>

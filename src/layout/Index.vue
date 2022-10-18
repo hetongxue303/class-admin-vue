@@ -20,14 +20,14 @@
 </template>
 
 <script setup lang="ts">
-import SideBar from "./sidebar/Index.vue";
-import Header from "./header/Index.vue";
-import Footer from "./footer/Index.vue";
-import Tabs from "../components/tabs/Index.vue";
+import SideBar from './sidebar/Index.vue'
+import Header from './header/Index.vue'
+import Footer from './footer/Index.vue'
+import Tabs from '../components/tabs/Index.vue'
 
-import { useUserStore } from "../store/modules/user";
+import { useUserStore } from '../store/modules/user'
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 </script>
 
 <style scoped lang="scss">

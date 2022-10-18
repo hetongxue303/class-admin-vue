@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import Collapse from "./components/Collapse.vue";
-import FullScreen from "./components/FullScreen.vue";
-import Center from "./components/Center.vue";
+import Collapse from './components/Collapse.vue'
+import FullScreen from './components/FullScreen.vue'
+import Center from './components/Center.vue'
 </script>
 
 <style scoped lang="scss"></style>

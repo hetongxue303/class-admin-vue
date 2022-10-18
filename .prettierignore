@@ -6,4 +6,5 @@
 **/*.svg
 **/*.sh
 
-/public/*
+public/*
+*.d.ts

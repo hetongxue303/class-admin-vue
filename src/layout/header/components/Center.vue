@@ -14,7 +14,9 @@
       <el-dropdown-menu>
         <el-dropdown-item>布局设置</el-dropdown-item>
         <el-dropdown-item>个人中心</el-dropdown-item>
-        <el-dropdown-item divided @click="dialogVisible = true">退出登录</el-dropdown-item>
+        <el-dropdown-item divided @click="dialogVisible = true"
+          >退出登录</el-dropdown-item
+        >
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -32,29 +34,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useUserStore } from "../../../store/modules/user";
-import { logout } from "../../../api/user";
-import { ElMessage } from "element-plus";
-import { removeToken } from "../../../utils/auth";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useUserStore } from '../../../store/modules/user'
+import { logout } from '../../../api/user'
+import { removeToken } from '../../../utils/auth'
 
-const router = useRouter();
-const userStore = useUserStore();
-const dialogVisible = ref(false);
+const router = useRouter()
+const userStore = useUserStore()
+const dialogVisible = ref(false)
 
 const handlerLogout = async () => {
-  const { data } = await logout();
+  const { data } = await logout()
   switch (data.code as number) {
     case 200:
-      removeToken();
-      ElMessage.success("注销成功");
-      await router.replace("/login");
-      break;
+      removeToken()
+      ElMessage.success('注销成功')
+      await router.replace('/login')
+      break
     default:
-      ElMessage.error("注销失败");
+      ElMessage.error('注销失败')
   }
-};
+}
 </script>
 
 <style scoped lang="scss"></style>

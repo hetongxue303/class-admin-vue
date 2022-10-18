@@ -9,7 +9,7 @@
           <span>账号密码登录</span>
           <span class="login-box-right-box-text"></span>
         </div>
-        <el-form :model="loginForm" :rules="rules" ref="ruleFormRef">
+        <el-form ref="ruleFormRef" :model="loginForm" :rules="rules">
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" placeholder="用户名">
               <template #prefix>
@@ -20,7 +20,11 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="loginForm.password" show-password placeholder="密码">
+            <el-input
+              v-model="loginForm.password"
+              show-password
+              placeholder="密码"
+            >
               <template #prefix>
                 <el-icon>
                   <component is="lock" />
@@ -42,9 +46,9 @@
               <el-col :span="8" class="flex justify-center items-center">
                 <el-image
                   :src="option.imgUrl"
-                  @click="initCaptcha"
                   style="cursor: pointer"
                   title="点击切换验证码"
+                  @click="initCaptcha"
                 />
               </el-col>
             </el-row>
@@ -53,7 +57,11 @@
             <el-checkbox v-model="loginForm.rememberMe">记住我</el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="option.loading" @click="loginHandler(ruleFormRef)">
+            <el-button
+              type="primary"
+              :loading="option.loading"
+              @click="loginHandler(ruleFormRef)"
+            >
               <span v-if="!option.loading">登 录</span>
               <span v-else>登 陆 中...</span>
             </el-button>
@@ -68,51 +76,51 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from "vue";
-import { ElMessage, FormInstance, FormRules } from "element-plus";
-import { getCaptcha, login } from "../api/user";
-import { useCookies } from "@vueuse/integrations/useCookies";
-import { useRouter } from "vue-router";
-import { setToken } from "../utils/auth";
-import { COOKIE_EXPIRES } from "../../settings";
-import { expires } from "../utils/date";
-import { TimeUnit } from "../enums/TimeUnit";
-import { decrypt, encrypt } from "../utils/jsencrypt";
-import { Const_Cookie } from "../constant/cookie";
-import { encryptMD5 } from "../hook/encryptMD5";
+import { onMounted, reactive, ref, watch } from 'vue'
+import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import { useCookies } from '@vueuse/integrations/useCookies'
+import { useRouter } from 'vue-router'
+import { getCaptcha, login } from '../api/user'
+import { setToken } from '../utils/auth'
+import { COOKIE_EXPIRES } from '../../settings'
+import { expires } from '../utils/date'
+import { TimeUnit } from '../enums/TimeUnit'
+import { decrypt, encrypt } from '../utils/jsencrypt'
+import { Const_Cookie } from '../constant/cookie'
+import { encryptMD5 } from '../hook/encryptMD5'
 
-const cookie = useCookies();
-const router = useRouter();
-const ruleFormRef = ref<FormInstance>();
+const cookie = useCookies()
+const router = useRouter()
+const ruleFormRef = ref<FormInstance>()
 
 const option = reactive({
   loading: false,
-  imgUrl: ""
-});
+  imgUrl: '',
+})
 
 const loginForm = reactive({
-  username: "admin",
-  password: "123456",
-  code: "",
-  rememberMe: false
-});
+  username: 'admin',
+  password: '123456',
+  code: '',
+  rememberMe: false,
+})
 
 const rules = reactive<FormRules>({
   username: [
-    { required: true, message: "账号不能为空", trigger: "blur" },
-    { min: 3, max: 20, message: "账号长度为3到20", trigger: "blur" }
+    { required: true, message: '账号不能为空', trigger: 'blur' },
+    { min: 3, max: 20, message: '账号长度为3到20', trigger: 'blur' },
   ],
   password: [
-    { required: true, message: "密码不能为空", trigger: "blur" },
-    { min: 3, max: 20, message: "密码长度为3到20", trigger: "blur" }
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    { min: 3, max: 20, message: '密码长度为3到20', trigger: 'blur' },
   ],
-  code: [{ required: true, message: "验证码不能为空", trigger: "blur" }]
-});
+  code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }],
+})
 
 const initCaptcha = async () => {
-  const { data } = await getCaptcha();
-  option.imgUrl = data.data;
-};
+  const { data } = await getCaptcha()
+  option.imgUrl = data.data
+}
 
 const loginHandler = async (formEl: FormInstance | undefined) => {
   if (formEl) {
@@ -122,44 +130,44 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
           username: loginForm.username,
           password: encryptMD5(loginForm.password),
           code: loginForm.code,
-          rememberMe: loginForm.rememberMe
-        });
+          rememberMe: loginForm.rememberMe,
+        })
         switch (data.code as number) {
           case 200: {
-            rememberMeHandler(loginForm.rememberMe);
-            setToken(headers.authorization as string);
-            ElMessage.success("登陆成功");
-            await router.push("/dashboard");
-            break;
+            rememberMeHandler(loginForm.rememberMe)
+            setToken(headers.authorization as string)
+            ElMessage.success('登陆成功')
+            await router.push('/dashboard')
+            break
           }
           case 5000:
-            ElMessage.error("验证码错误");
-            loginForm.code = "";
-            await initCaptcha();
-            break;
+            ElMessage.error('验证码错误')
+            loginForm.code = ''
+            await initCaptcha()
+            break
           case 5001:
-            ElMessage.error("验证码过期");
-            loginForm.code = "";
-            await initCaptcha();
-            break;
+            ElMessage.error('验证码过期')
+            loginForm.code = ''
+            await initCaptcha()
+            break
           case 5002:
-            ElMessage.error("验证码不能为空");
-            loginForm.code = "";
-            await initCaptcha();
-            break;
+            ElMessage.error('验证码不能为空')
+            loginForm.code = ''
+            await initCaptcha()
+            break
           case 400:
-            ElMessage.error("用户名或密码错误");
-            loginForm.code = "";
-            loginForm.password = "";
-            await initCaptcha();
-            break;
+            ElMessage.error('用户名或密码错误')
+            loginForm.code = ''
+            loginForm.password = ''
+            await initCaptcha()
+            break
           default:
-            ElMessage.warning("发生异常");
+            ElMessage.warning('发生异常')
         }
       }
-    });
+    })
   }
-};
+}
 
 const rememberMeHandler = (status: boolean) => {
   if (status) {
@@ -168,32 +176,32 @@ const rememberMeHandler = (status: boolean) => {
       encrypt(
         JSON.stringify({
           username: loginForm.username,
-          password: encrypt(loginForm.password)
-        })
+          password: encrypt(loginForm.password),
+        }),
       ),
-      { expires: expires(COOKIE_EXPIRES, TimeUnit.DAYS) }
-    );
+      { expires: expires(COOKIE_EXPIRES, TimeUnit.DAYS) },
+    )
   }
-};
+}
 
 const isRememberMeHandler = () => {
   if (cookie.get(Const_Cookie.CLASS_SYSTEM_USER)) {
-    let user: any = decrypt(cookie.get(Const_Cookie.CLASS_SYSTEM_USER));
-    loginForm.username = user.username;
-    loginForm.password = decrypt(user.password);
-    loginForm.rememberMe = true;
+    const user: any = decrypt(cookie.get(Const_Cookie.CLASS_SYSTEM_USER))
+    loginForm.username = user.username
+    loginForm.password = decrypt(user.password)
+    loginForm.rememberMe = true
   }
-};
+}
 
 watch(
   () => option.imgUrl,
-  () => (loginForm.code = "")
-);
+  () => (loginForm.code = ''),
+)
 
 onMounted(() => {
-  initCaptcha();
-  isRememberMeHandler();
-});
+  initCaptcha()
+  isRememberMeHandler()
+})
 </script>
 
 <style scoped lang="scss">

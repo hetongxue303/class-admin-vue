@@ -1,7 +1,10 @@
 <template>
   <template v-for="(item, index) in data" :key="index">
     <!--有子组件时-->
-    <el-sub-menu v-if="item.children && item.children.length > 0" :index="item.path">
+    <el-sub-menu
+      v-if="item.children && item.children.length > 0"
+      :index="item.path"
+    >
       <template #title>
         <el-icon>
           <component :is="item.icon" />
@@ -21,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType } from 'vue'
 
 defineProps({
-  data: { type: Array as PropType<any[]>, required: true }
-});
+  data: { type: Array as PropType<any[]>, required: true },
+})
 </script>
 
 <style scoped lang="scss"></style>
