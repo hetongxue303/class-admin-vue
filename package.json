@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite  --force --host",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
-    "prettier": "prettier --write ./**/*.{vue,ts,tsx,js,jsx,css,less,scss,json,md}",
+    "lint": "eslint  {**/*,*}.{js,ts,jsx,tsx,html,vue} --fix",
+    "prettier": "prettier --write {**/*,*}.{vue,css,scss,less,json,js,ts,jsx,tsx}",
     "prepare": "husky install"
   },
   "husky": {
@@ -26,6 +26,7 @@
     ]
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@element-plus/icons-vue": "^2.0.10",
     "@vueuse/core": "^9.3.0",
     "@vueuse/integrations": "^9.3.0",

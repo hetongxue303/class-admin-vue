@@ -6,13 +6,12 @@ export const useUserStore = defineStore('user', {
   state: (): IUserStore => {
     return {
       Authorization: getToken() || '',
-      collapse: false,
-      roles: [],
+      collapse: false
     }
   },
   getters: {
-    getCollapse: (state) => state.collapse,
-    getRoles: (state) => state.roles,
+    // 获取折叠状态
+    getCollapse: (state) => state.collapse
   },
   actions: {
     // 设置折叠面板状态
@@ -20,12 +19,12 @@ export const useUserStore = defineStore('user', {
       this.collapse = status
     },
     // 用户注销
-    logout() {
+    userLogout() {
       removeToken()
       this.$reset()
-    },
+    }
   },
   persist: {
-    key: 'USER',
-  },
+    key: 'USER'
+  }
 })

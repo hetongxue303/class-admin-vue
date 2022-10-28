@@ -17,7 +17,7 @@ export const local = {
   },
   clear() {
     localStorage.clear()
-  },
+  }
 }
 
 /**
@@ -39,5 +39,5 @@ export const session = {
   },
   clear() {
     sessionStorage.clear()
-  },
+  }
 }

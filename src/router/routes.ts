@@ -8,16 +8,16 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: '用户登录',
       isShow: false,
-      requireAuth: false,
+      requireAuth: false
     },
-    component: () => import('@views/Login.vue'),
+    component: () => import('@views/Login.vue')
   },
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
     meta: {
-      isShow: false,
+      isShow: false
     },
     children: [
       {
@@ -29,16 +29,16 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
-      },
-    ],
+          requireAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/user',
     component: Layout,
     meta: {
-      isShow: false,
+      isShow: false
     },
     children: [
       {
@@ -50,16 +50,16 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
-      },
-    ],
+          requireAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/college',
     component: Layout,
     meta: {
-      isShow: false,
+      isShow: false
     },
     children: [
       {
@@ -71,8 +71,8 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
+          requireAuth: true
+        }
       },
       {
         name: 'academy',
@@ -83,16 +83,16 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
-      },
-    ],
+          requireAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/class',
     component: Layout,
     meta: {
-      isShow: false,
+      isShow: false
     },
     children: [
       {
@@ -104,8 +104,8 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
+          requireAuth: true
+        }
       },
       {
         name: 'setting',
@@ -116,16 +116,16 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
-      },
-    ],
+          requireAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/system',
     component: Layout,
     meta: {
-      isShow: false,
+      isShow: false
     },
     children: [
       {
@@ -137,8 +137,8 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
+          requireAuth: true
+        }
       },
       {
         name: 'about',
@@ -149,11 +149,11 @@ const routes: RouteRecordRaw[] = [
           icon: null,
           roles: ['any'],
           isShow: true,
-          requireAuth: true,
-        },
-      },
-    ],
-  },
+          requireAuth: true
+        }
+      }
+    ]
+  }
 ]
 
 export default routes

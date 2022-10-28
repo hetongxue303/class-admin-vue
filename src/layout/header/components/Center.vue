@@ -39,17 +39,18 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '../../../store/modules/user'
 import { logout } from '../../../api/user'
-import { removeToken } from '../../../utils/auth'
 
+// 实例化
 const router = useRouter()
 const userStore = useUserStore()
 const dialogVisible = ref(false)
 
+// 注销处理
 const handlerLogout = async () => {
   const { data } = await logout()
   switch (data.code as number) {
     case 200:
-      removeToken()
+      userStore.userLogout()
       ElMessage.success('注销成功')
       await router.replace('/login')
       break

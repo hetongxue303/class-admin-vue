@@ -5,7 +5,7 @@ module.exports = {
   semi: false,
   singleQuote: true,
   quoteProps: 'as-needed',
-  trailingComma: 'all',
+  trailingComma: 'none',
   arrowParens: 'always',
   rangeStart: 0,
   rangeEnd: Infinity,
@@ -16,5 +16,5 @@ module.exports = {
   bracketSpacing: true,
   htmlWhitespaceSensitivity: 'css',
   jsxSingleQuote: false,
-  vueIndentScriptAndStyle: false,
+  vueIndentScriptAndStyle: false
 }

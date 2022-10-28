@@ -9,20 +9,20 @@ export default defineConfig({
     vue(),
     WindiCSS(),
     eslintPlugin({
-      include: ['src/**/*.ts', 'src/**/*.vue', 'src/*.ts', 'src/*.vue'],
-      cache: false,
-    }),
+      include: ['{**/*,*}.{js,ts,jsx,tsx,html,vue}'],
+      cache: false
+    })
   ],
   css: {
-    devSourcemap: true,
+    devSourcemap: true
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
       '@views': resolve(__dirname, 'src/views'),
       '@layout': resolve(__dirname, 'src/layout'),
-      '@components': resolve(__dirname, 'src/components'),
-    },
+      '@components': resolve(__dirname, 'src/components')
+    }
   },
   server: {
     host: '127.0.0.1',
@@ -33,8 +33,8 @@ export default defineConfig({
       '/api': {
         target: 'http://127.0.0.1:8080',
         changeOrigin: true,
-        rewrite: (path: string) => path.replace(/^\/api/, ''),
-      },
-    },
-  },
+        rewrite: (path: string) => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

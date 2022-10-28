@@ -7,5 +7,5 @@ export default nProgress.configure({
   showSpinner: false, // 是否使用进度环
   minimum: 0.3, // 初始化最小百分比
   trickleSpeed: 200, // 自动递进间隔速度
-  parent: 'body', // 指定父容器
+  parent: 'body' // 指定父容器
 })

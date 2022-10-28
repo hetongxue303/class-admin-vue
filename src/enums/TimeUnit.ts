@@ -8,5 +8,5 @@ export enum TimeUnit {
   DAYS,
   WEEKS,
   MONTHS,
-  YEARS,
+  YEARS
 }

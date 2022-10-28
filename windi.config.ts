@@ -9,12 +9,12 @@ export default defineConfig({
       screens: {},
       colors: {
         white: '#ffffff',
-        black: '#000000',
+        black: '#000000'
       },
       fontFamily: {},
       spacing: {},
-      borderRadius: {},
-    },
+      borderRadius: {}
+    }
   },
-  plugins: [],
+  plugins: []
 })

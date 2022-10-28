@@ -27,7 +27,7 @@
 import { PropType } from 'vue'
 
 defineProps({
-  data: { type: Array as PropType<any[]>, required: true },
+  data: { type: Array as PropType<any[]>, required: true }
 })
 </script>
 

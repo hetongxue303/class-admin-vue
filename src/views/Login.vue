@@ -45,8 +45,8 @@
               </el-col>
               <el-col :span="8" class="flex justify-center items-center">
                 <el-image
-                  :src="option.imgUrl"
-                  style="cursor: pointer"
+                  :src="parameter.imgUrl"
+                  style="cursor: pointer; margin-top: 3px"
                   title="点击切换验证码"
                   @click="initCaptcha"
                 />
@@ -59,10 +59,10 @@
           <el-form-item>
             <el-button
               type="primary"
-              :loading="option.loading"
+              :loading="parameter.loading"
               @click="loginHandler(ruleFormRef)"
             >
-              <span v-if="!option.loading">登 录</span>
+              <span v-if="!parameter.loading">登 录</span>
               <span v-else>登 陆 中...</span>
             </el-button>
           </el-form-item>
@@ -79,7 +79,7 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { useCookies } from '@vueuse/integrations/useCookies'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getCaptcha, login } from '../api/user'
 import { setToken } from '../utils/auth'
 import { COOKIE_EXPIRES } from '../../settings'
@@ -89,39 +89,41 @@ import { decrypt, encrypt } from '../utils/jsencrypt'
 import { Const_Cookie } from '../constant/cookie'
 import { encryptMD5 } from '../hook/encryptMD5'
 
+// 实例化
 const cookie = useCookies()
 const router = useRouter()
+const route = useRoute()
 const ruleFormRef = ref<FormInstance>()
 
-const option = reactive({
+// 参数定义
+const parameter = reactive({
   loading: false,
   imgUrl: '',
+  redirect: ''
 })
 
+// 登陆表单
 const loginForm = reactive({
   username: 'admin',
   password: '123456',
   code: '',
-  rememberMe: false,
+  rememberMe: false
 })
 
+// 验证规则
 const rules = reactive<FormRules>({
-  username: [
-    { required: true, message: '账号不能为空', trigger: 'blur' },
-    { min: 3, max: 20, message: '账号长度为3到20', trigger: 'blur' },
-  ],
-  password: [
-    { required: true, message: '密码不能为空', trigger: 'blur' },
-    { min: 3, max: 20, message: '密码长度为3到20', trigger: 'blur' },
-  ],
-  code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }],
+  username: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+  password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+  code: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
 })
 
+// 获取图片验证码
 const initCaptcha = async () => {
   const { data } = await getCaptcha()
-  option.imgUrl = data.data
+  parameter.imgUrl = data.data
 }
 
+// 登陆处理
 const loginHandler = async (formEl: FormInstance | undefined) => {
   if (formEl) {
     await formEl.validate(async (valid) => {
@@ -130,14 +132,15 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
           username: loginForm.username,
           password: encryptMD5(loginForm.password),
           code: loginForm.code,
-          rememberMe: loginForm.rememberMe,
+          rememberMe: loginForm.rememberMe
         })
         switch (data.code as number) {
           case 200: {
-            rememberMeHandler(loginForm.rememberMe)
+            // rememberMeHandler(loginForm.rememberMe)
+            // 存储token
             setToken(headers.authorization as string)
             ElMessage.success('登陆成功')
-            await router.push('/dashboard')
+            await router.push(parameter.redirect || '/')
             break
           }
           case 5000:
@@ -164,11 +167,13 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
           default:
             ElMessage.warning('发生异常')
         }
+      } else {
+        ElMessage.warning('数据不合法')
       }
     })
   }
 }
-
+// 勾选记住我处理
 const rememberMeHandler = (status: boolean) => {
   if (status) {
     cookie.set(
@@ -176,14 +181,15 @@ const rememberMeHandler = (status: boolean) => {
       encrypt(
         JSON.stringify({
           username: loginForm.username,
-          password: encrypt(loginForm.password),
-        }),
+          password: encrypt(loginForm.password)
+        })
       ),
-      { expires: expires(COOKIE_EXPIRES, TimeUnit.DAYS) },
+      { expires: expires(COOKIE_EXPIRES, TimeUnit.DAYS) }
     )
   }
 }
 
+// 判断cookie中是否有数据 实现自动登录
 const isRememberMeHandler = () => {
   if (cookie.get(Const_Cookie.CLASS_SYSTEM_USER)) {
     const user: any = decrypt(cookie.get(Const_Cookie.CLASS_SYSTEM_USER))
@@ -193,14 +199,23 @@ const isRememberMeHandler = () => {
   }
 }
 
+// 监听图片验证码切换
 watch(
-  () => option.imgUrl,
-  () => (loginForm.code = ''),
+  () => parameter.imgUrl,
+  () => (loginForm.code = '')
 )
 
+// 监听跳转期待页面
+watch(
+  () => route,
+  () => (parameter.redirect = route.query && (route.query.redirect as string)),
+  { immediate: true }
+)
+
+// 启动时处理
 onMounted(() => {
   initCaptcha()
-  isRememberMeHandler()
+  // isRememberMeHandler()
 })
 </script>
 

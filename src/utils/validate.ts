@@ -7,7 +7,7 @@
 export const validatorUsername = (
   rule: any,
   username: string,
-  callback: Function,
+  callback: Function
 ) => {
   if (!username) {
     return callback()
@@ -27,7 +27,7 @@ export const validatorUsername = (
 export const validatorPassword = (
   rule: any,
   password: string,
-  callback: Function,
+  callback: Function
 ) => {
   if (!password) {
     return callback()

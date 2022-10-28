@@ -10,8 +10,8 @@ axios.create({
   withCredentials: true,
   timeoutErrorMessage: '请求超时',
   headers: {
-    'Content-Type': 'application/json;charset=utf-8',
-  },
+    'Content-Type': 'application/json;charset=utf-8'
+  }
 })
 
 axios.interceptors.request.use(
@@ -26,7 +26,7 @@ axios.interceptors.request.use(
   (error: any) => {
     ElNotification.error('未知错误')
     return Promise.reject(error)
-  },
+  }
 )
 
 axios.interceptors.response.use(
@@ -53,7 +53,7 @@ axios.interceptors.response.use(
   (error: any) => {
     ElNotification.error('服务器异常')
     return Promise.reject(error)
-  },
+  }
 )
 
 export default axios

@@ -6,16 +6,16 @@ export const useTabsStore = defineStore('tabs', {
     return {
       tabs: [],
       activeName: '',
-      currentName: '',
+      currentName: ''
     }
   },
   getters: {
     getTabs: (state) => state.tabs,
     getActiveName: (state) => state.activeName,
-    getCurrentName: (state) => state.currentName,
+    getCurrentName: (state) => state.currentName
   },
   actions: {},
   persist: {
-    key: 'TABS',
-  },
+    key: 'TABS'
+  }
 })

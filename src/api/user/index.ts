@@ -8,7 +8,7 @@ const baseAPI = `${import.meta.env.VITE_GLOB_BASIC_API}/auth`
 export const getCaptcha = () => {
   return axios({
     method: 'GET',
-    url: `${baseAPI}/captchaImage`,
+    url: `${baseAPI}/captchaImage`
   })
 }
 
@@ -19,8 +19,8 @@ export const login = (data: loginEntity) => {
     url: `${baseAPI}/login`,
     data: qs.stringify(data),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
 }
 
@@ -28,7 +28,7 @@ export const login = (data: loginEntity) => {
 export const logout = () => {
   return axios({
     method: 'GET',
-    url: `${baseAPI}/logout`,
+    url: `${baseAPI}/logout`
   })
 }
 
@@ -39,7 +39,7 @@ export const getUserList = (data: any) => {
     url: `${baseAPI}/test`,
     data: qs.stringify(data),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
 }

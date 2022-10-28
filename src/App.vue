@@ -9,14 +9,12 @@ const router = useRouter()
 watch(
   () => route.path,
   () => setBrowserTitle(router),
-  { deep: true, immediate: true },
+  { deep: true, immediate: true }
 )
 </script>
 
 <template>
-  <transition name="fade">
-    <router-view />
-  </transition>
+  <router-view />
 </template>
 
 <style scoped></style>
