@@ -60,7 +60,9 @@ module.exports = {
     'no-return-assign':0,
     'no-unused-vars': 0,
     'no-bitwise': 0,
+    'no-import-assign':0,
     'no-shadow': 0,
+    'no-redeclare':0,
     'default-case': 0,
     'camelcase':0
   }

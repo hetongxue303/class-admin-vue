@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { getToken, removeToken } from '../../utils/auth'
 import { IUserStore } from '../types'
 import { getUserInfo } from '../../api/user'
+import { IMenuItem } from '../../layout/types'
 
 export const useUserStore = defineStore('user', {
   state: (): IUserStore => {

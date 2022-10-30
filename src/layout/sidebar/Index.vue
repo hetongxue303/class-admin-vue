@@ -11,21 +11,31 @@
     background-color="#545c64"
   >
     <Logo :collapse="isCollapse" />
-    <menu-item :data="data" />
+    <menu-item :data="menus" />
   </el-menu>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { menus } from '../data/menus'
 
 import MenuItem from './components/MenuItem.vue'
 import Logo from './components/Logo.vue'
+import { useUserStore } from '../../store/modules/user'
+import { IMenuItem } from '../types'
 
 const route = useRoute()
+const userStore = useUserStore()
 
-const data = menus
+const menus: Array<IMenuItem> = [
+  {
+    name: '首页',
+    icon: 'document',
+    path: '/dashboard'
+  }
+]
+userStore.getMenus.forEach((menu) => menus.push(menu))
+console.log(`aaa:${menus}`)
 
 defineProps({
   isCollapse: { type: Boolean, required: true, default: false }
