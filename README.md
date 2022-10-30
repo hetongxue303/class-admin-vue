@@ -7,7 +7,7 @@
 - 新建项目
 
 ```shell
-npm init vite@latest class-admin-vue -- --template vue-ts
+npm init vite@latest edu-admin-vue -- --template vue-ts
 ```
 
 - 运行项目

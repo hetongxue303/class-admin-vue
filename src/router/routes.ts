@@ -52,6 +52,18 @@ const routes: RouteRecordRaw[] = [
           isShow: true,
           requireAuth: true
         }
+      },
+      {
+        name: 'teacher',
+        path: '/user/teacher',
+        component: () => import('@views/user/Teacher.vue'),
+        meta: {
+          title: '教师管理',
+          icon: null,
+          roles: ['any'],
+          isShow: true,
+          requireAuth: true
+        }
       }
     ]
   },
@@ -89,7 +101,7 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/class',
+    path: '/edu',
     component: Layout,
     meta: {
       isShow: false
@@ -97,22 +109,10 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         name: 'edit',
-        path: '/class/edit',
-        component: () => import('@views/class/Edit.vue'),
+        path: '/edu/course',
+        component: () => import('@views/edu/Course.vue'),
         meta: {
-          title: '编辑课程',
-          icon: null,
-          roles: ['any'],
-          isShow: true,
-          requireAuth: true
-        }
-      },
-      {
-        name: 'setting',
-        path: '/class/setting',
-        component: () => import('@views/class/Setting.vue'),
-        meta: {
-          title: '设置排课',
+          title: '课程管理',
           icon: null,
           roles: ['any'],
           isShow: true,

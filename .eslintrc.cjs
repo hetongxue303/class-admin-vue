@@ -64,6 +64,8 @@ module.exports = {
     'no-shadow': 0,
     'no-redeclare':0,
     'default-case': 0,
-    'camelcase':0
+    'camelcase':0,
+    'eslint-disable-next-line':0,
+    'no-use-before-define':0
   }
 }

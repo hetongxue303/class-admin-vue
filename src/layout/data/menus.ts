@@ -38,17 +38,17 @@ export const menus: Array<IMenuItem> = [
   {
     name: '课程管理',
     icon: 'document',
-    path: '/class',
+    path: '/edu',
     children: [
       {
         name: '编辑课程',
         icon: 'user',
-        path: '/class/edit'
+        path: '/edu/edit'
       },
       {
         name: '设置排课',
         icon: 'user',
-        path: '/class/setting'
+        path: '/edu/setting'
       }
     ]
   },

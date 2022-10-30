@@ -17,14 +17,14 @@ import { IStudent } from '../../api/user/types'
 
 let tableData = reactive<Array<IStudent>>([])
 
-const getStudents = async () => {
-  const { data } = await getUserList('student')
+const getTeachers = async () => {
+  const { data } = await getUserList('teacher')
   tableData = data.data
   console.log(tableData)
 }
 
 onMounted(() => {
-  getStudents()
+  getTeachers()
 })
 </script>
 

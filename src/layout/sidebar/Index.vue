@@ -35,7 +35,6 @@ const menus: Array<IMenuItem> = [
   }
 ]
 userStore.getMenus.forEach((menu) => menus.push(menu))
-console.log(`aaa:${menus}`)
 
 defineProps({
   isCollapse: { type: Boolean, required: true, default: false }
