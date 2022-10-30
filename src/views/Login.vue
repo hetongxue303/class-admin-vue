@@ -128,7 +128,7 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
   if (formEl) {
     await formEl.validate(async (valid) => {
       if (valid) {
-        const { data, headers } = await login({
+        const { data } = await login({
           username: loginForm.username,
           password: encryptMD5(loginForm.password),
           code: loginForm.code,
@@ -138,7 +138,7 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
           case 200: {
             // rememberMeHandler(loginForm.rememberMe)
             // 存储token
-            setToken(headers.authorization as string)
+            setToken(data.data.token as string)
             ElMessage.success('登陆成功')
             await router.push(parameter.redirect || '/')
             break

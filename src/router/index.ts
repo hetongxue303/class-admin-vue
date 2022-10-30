@@ -1,12 +1,11 @@
-import {
-  createRouter,
-  createWebHistory,
-  RouteRecordRaw,
-  useRoute
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import routes from './routes'
 import NProgress from '../plugins/nProgress'
 import { getToken } from '../utils/auth'
+import { useUserStore } from '../store/modules/user'
+import pinia from '../store'
+
+const userStore = useUserStore(pinia)
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,10 +14,20 @@ const router = createRouter({
 
 const REQUEST_WITHE_LIST: string[] = ['/login', '/register']
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   NProgress.start()
   if (getToken()) {
-    next()
+    if (to.path === '/login') {
+      next('/')
+    } else if (
+      userStore.getRoles.length === 0 ||
+      userStore.getMenus.length === 0
+    ) {
+      await userStore.getUserInfo()
+      next()
+    } else {
+      next()
+    }
   } else if (REQUEST_WITHE_LIST.indexOf(to.path) !== -1) {
     next()
   } else {

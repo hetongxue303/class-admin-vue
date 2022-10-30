@@ -2,13 +2,13 @@ import * as qs from 'qs'
 import axios from '../../utils/request'
 import { loginEntity } from './types'
 
-const baseAPI = `${import.meta.env.VITE_GLOB_BASIC_API}/auth`
+const baseAPI = `${import.meta.env.VITE_GLOB_BASIC_API}`
 
 // 获取验证码
 export const getCaptcha = () => {
   return axios({
     method: 'GET',
-    url: `${baseAPI}/captchaImage`
+    url: `${baseAPI}/auth/captchaImage`
   })
 }
 
@@ -16,7 +16,7 @@ export const getCaptcha = () => {
 export const login = (data: loginEntity) => {
   return axios({
     method: 'POST',
-    url: `${baseAPI}/login`,
+    url: `${baseAPI}/auth/login`,
     data: qs.stringify(data),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,18 +28,14 @@ export const login = (data: loginEntity) => {
 export const logout = () => {
   return axios({
     method: 'GET',
-    url: `${baseAPI}/logout`
+    url: `${baseAPI}/auth/logout`
   })
 }
 
 // 获取用户信息
-export const getUserList = (data: any) => {
+export const getUserInfo = () => {
   return axios({
     method: 'GET',
-    url: `${baseAPI}/test`,
-    data: qs.stringify(data),
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    url: `${baseAPI}/user/getUserInfo`
   })
 }
