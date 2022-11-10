@@ -1,7 +1,9 @@
 <template>
   <div class="login-content">
     <div class="login-box">
-      <div class="login-box-left"></div>
+      <div class="login-box-left">
+        <h1>这里可以放一些标题内容</h1>
+      </div>
       <div class="login-box-right">
         <h2 class="login-box-right-title">欢迎回来</h2>
         <div class="login-box-right-box">
@@ -235,13 +237,14 @@ onMounted(() => {
     &-left {
       width: 60%;
       border-radius: 0.375rem 0 0 0.375rem;
-      @apply h-full bg-sky-100;
+      @apply h-full bg-sky-50;
+      @include d-flex;
     }
 
     &-right {
       width: 40%;
       border-radius: 0 0.375rem 0.375rem 0;
-      @apply h-full bg-sky-200 flex-col;
+      @apply h-full bg-sky-100 flex-col;
       @include d-flex;
 
       &-title {

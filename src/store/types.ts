@@ -1,4 +1,4 @@
-import { ITabs } from '../components/tabs/types'
+import { ITabs } from '../components/Tabs/types'
 import { RouteRecordRaw } from 'vue-router'
 import { IMenuItem } from '../layout/types'
 

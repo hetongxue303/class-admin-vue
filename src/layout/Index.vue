@@ -7,7 +7,7 @@
       <el-header>
         <Header />
       </el-header>
-      <!-- tabs.ts -->
+      <!-- Tabs.ts -->
       <!--      <Tabs/>-->
       <el-main>
         <router-view />
@@ -23,7 +23,7 @@
 import SideBar from './sidebar/Index.vue'
 import Header from './header/Index.vue'
 import Footer from './footer/Index.vue'
-import Tabs from '../components/tabs/Index.vue'
+import Tabs from '../components/Tabs/Index.vue'
 
 import { useUserStore } from '../store/modules/user'
 
