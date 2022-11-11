@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
     // 获取折叠状态
     getCollapse: (state) => state.collapse,
     // 获取角色信息
-    getRoles: (state) => state.role,
+    getRole: (state) => state.role,
     // 获取菜单信息
     getMenus: (state) => state.menus,
     // 获取路由信息
@@ -48,9 +48,11 @@ export const useUserStore = defineStore('user', {
     async getUserInfo() {
       const { data } = await getUserInfo()
       const userinfo = data.data
-      this.setRole(userinfo.role)
-      this.setMenus(userinfo.menus)
-      this.setRouters(userinfo.routers)
+      if (userinfo) {
+        this.setRole(userinfo.role)
+        this.setMenus(userinfo.menus)
+        this.setRouters(userinfo.routers)
+      }
     }
   },
   persist: {

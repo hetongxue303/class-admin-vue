@@ -1,4 +1,6 @@
 import axios from '../../utils/request'
+import { IPage } from '../types'
+import * as qs from 'qs'
 
 const studentApi = `${import.meta.env.VITE_GLOB_BASIC_API}/student`
 
@@ -7,6 +9,18 @@ export const getStudentList = () => {
   return axios({
     method: 'GET',
     url: `${studentApi}/list`
+  })
+}
+
+// 获取学生列表(分页)
+export const getStudentListPage = (data: IPage) => {
+  return axios({
+    method: 'GET',
+    url: `${studentApi}/page/list`,
+    data: qs.stringify(data),
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
   })
 }
 

@@ -1,6 +1,6 @@
 import * as qs from 'qs'
 import axios from '../utils/request'
-import { ILoginEntity } from './types'
+import { ILogin } from './types'
 
 const baseAPI = `${import.meta.env.VITE_GLOB_BASIC_API}`
 
@@ -13,7 +13,7 @@ export const getCaptcha = () => {
 }
 
 // 登录处理
-export const login = (data: ILoginEntity) => {
+export const login = (data: ILogin) => {
   return axios({
     method: 'POST',
     url: `${baseAPI}/auth/login`,

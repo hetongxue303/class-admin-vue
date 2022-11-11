@@ -1,41 +1,39 @@
 <template>
   <div class="table-content">
-    <!--    <el-row :gutter="10" justify="end" class="table-header">-->
-    <!--      <el-col :span="6">-->
-    <!--        <el-input placeholder="输入查询内容..." />-->
-    <!--      </el-col>-->
-    <!--      <el-col :span="4">-->
-    <!--        <el-button type="primary">搜索</el-button>-->
-    <!--        <el-button type="warning">重置</el-button>-->
-    <!--      </el-col>-->
-    <!--    </el-row>-->
-    <TableHeader />
-    <!--    <el-row :gutter="10" justify="end" class="table-operation">-->
-    <!--      <el-col :span="8" :pull="13">-->
-    <!--        <el-button type="primary" :icon="Plus">新增</el-button>-->
-    <!--        <el-button type="success" :icon="Edit">编辑</el-button>-->
-    <!--        <el-button type="danger" :icon="Delete">删除</el-button>-->
-    <!--        <el-button type="warning" :icon="Bottom">导出</el-button>-->
-    <!--      </el-col>-->
-    <!--      <el-col :span="3" class="iconBox">-->
-    <!--        <el-button>-->
-    <!--          <el-icon>-->
-    <!--            <component is="Search" />-->
-    <!--          </el-icon>-->
-    <!--        </el-button>-->
-    <!--        <el-button>-->
-    <!--          <el-icon>-->
-    <!--            <component is="Refresh" />-->
-    <!--          </el-icon>-->
-    <!--        </el-button>-->
-    <!--        <el-button>-->
-    <!--          <el-icon>-->
-    <!--            <component is="Grid" />-->
-    <!--          </el-icon>-->
-    <!--        </el-button>-->
-    <!--      </el-col>-->
-    <!--    </el-row>-->
-    <TableOperation />
+    <el-row :gutter="10" justify="end" class="table-header">
+      <el-col :span="6">
+        <el-input v-model="Page.query" placeholder="输入查询内容..." />
+      </el-col>
+      <el-col :span="4">
+        <el-button type="primary">搜索</el-button>
+        <el-button type="warning">重置</el-button>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10" justify="end" class="table-operation">
+      <el-col :span="8" :pull="13">
+        <el-button type="primary" :icon="Plus">新增</el-button>
+        <el-button type="success" :icon="Edit">编辑</el-button>
+        <el-button type="danger" :icon="Delete">删除</el-button>
+        <el-button type="warning" :icon="Bottom">导出</el-button>
+      </el-col>
+      <el-col :span="3" class="iconBox">
+        <el-button>
+          <el-icon>
+            <component is="Search" />
+          </el-icon>
+        </el-button>
+        <el-button>
+          <el-icon>
+            <component is="Refresh" />
+          </el-icon>
+        </el-button>
+        <el-button>
+          <el-icon>
+            <component is="Grid" />
+          </el-icon>
+        </el-button>
+      </el-col>
+    </el-row>
     <el-table
       :data="tableData"
       empty-text="暂无数据"
@@ -75,8 +73,8 @@
     </el-table>
     <!--分页组件-->
     <el-pagination
-      v-model:currentPage="currentPage"
-      v-model:page-size="pageSize"
+      v-model:currentPage="Page.currentPage"
+      v-model:page-size="Page.pageSize"
       :page-sizes="[10, 20, 30, 40, 50, 100]"
       :small="true"
       :disabled="false"
@@ -94,13 +92,20 @@ import { getStudentList } from '../../api/user/student'
 import { onMounted, reactive, ref } from 'vue'
 import { IUser } from '../../api/user/types'
 import { ElTable } from 'element-plus'
-import TableHeader from '../../components/Table/Header/Index.vue'
-import TableOperation from '../../components/Table/Operation/Index.vue'
+import { IPage } from '../../api/types'
+import { Plus, Delete, Edit, Bottom } from '@element-plus/icons-vue'
 
-const currentPage = ref(1)
-const pageSize = ref(10)
-const handleSizeChange = () => {}
-const handleCurrentChange = () => {}
+const handleSizeChange = () => {
+  console.log(Page.pageSize)
+}
+const handleCurrentChange = () => {
+  console.log(Page.currentPage)
+}
+const Page = reactive<IPage>({
+  query: '',
+  currentPage: 1,
+  pageSize: 10
+})
 
 const tableData = reactive<Array<IUser>>([])
 const getData = async () => {
@@ -122,19 +127,19 @@ onMounted(() => getData())
 <style scoped lang="scss">
 .table-content {
   @apply w-full h-full;
-  //.table-header {
-  //  @apply w-full h-50px flex items-center;
-  //}
-  //.table-operation {
-  //  @apply w-full h-50px flex items-center;
-  //  .iconBox {
-  //    :deep(.el-button) {
-  //      height: 30px;
-  //      width: 30px;
-  //      margin: 0;
-  //      border-radius: 0;
-  //    }
-  //  }
-  //}
+  .table-header {
+    @apply w-full h-50px flex items-center;
+  }
+  .table-operation {
+    @apply w-full h-50px flex items-center;
+    .iconBox {
+      :deep(.el-button) {
+        height: 30px;
+        width: 30px;
+        margin: 0;
+        border-radius: 0;
+      }
+    }
+  }
 }
 </style>

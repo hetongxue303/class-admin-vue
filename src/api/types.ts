@@ -43,3 +43,9 @@ export interface IStudent {
   updateBy?: string
   updateTime?: string
 }
+
+export interface IPage {
+  query?: string
+  currentPage?: number
+  pageSize?: number
+}

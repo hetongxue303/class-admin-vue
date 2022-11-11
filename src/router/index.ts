@@ -1,53 +1,19 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import NProgress from '../plugins/nProgress'
-import { getToken } from '../utils/auth'
+import { createRouter, createWebHistory } from 'vue-router'
+import routes from './routes'
 import { useUserStore } from '../store/modules/user'
 import pinia from '../store'
-import Layout from '@layout/Index.vue'
-import routes from './routes' // 本地数据
+import NProgress from '../plugins/nProgress'
+import { getToken } from '../utils/auth'
+import { isReLogin } from '../utils/request' // 本地数据
 
-const userStore = useUserStore(pinia)
-
-// const routes: Array<RouteRecordRaw> = [
-//   {
-//     name: 'login',
-//     path: '/login',
-//     meta: {
-//       title: '用户登录',
-//       isShow: false,
-//       requireAuth: false
-//     },
-//     component: () => import('@views/Login.vue')
-//   },
-//   {
-//     path: '/',
-//     component: Layout,
-//     redirect: '/dashboard',
-//     meta: {
-//       isShow: false
-//     },
-//     children: [
-//       {
-//         name: 'dashboard',
-//         path: '/dashboard',
-//         component: () => import('@views/dashboard/Index.vue'),
-//         meta: {
-//           title: '首页',
-//           icon: null,
-//           roles: ['any'],
-//           isShow: true,
-//           requireAuth: true
-//         }
-//       }
-//     ]
-//   }
-// ]
-
+// 初始化路由
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
+// 权限配置
+const userStore = useUserStore(pinia)
 const REQUEST_WITHE_LIST: string[] = ['/login', '/register']
 
 router.beforeEach(async (to, from, next) => {
@@ -58,10 +24,19 @@ router.beforeEach(async (to, from, next) => {
     } else if (
       userStore.getRouters.length === 0 ||
       userStore.getMenus.length === 0 ||
-      userStore.getRoles === ''
+      userStore.getRole === ''
     ) {
-      await userStore.getUserInfo()
-      next()
+      await userStore
+        .getUserInfo()
+        .then(() => {
+          isReLogin.show = false
+          // TODO 生成动态路由
+          next({ ...to, replace: true })
+        })
+        .catch(() => {
+          userStore.userLogout()
+          next('/')
+        })
     } else {
       next()
     }
@@ -72,9 +47,10 @@ router.beforeEach(async (to, from, next) => {
       to.fullPath === '/dashboard' ? '/login' : `/login?redirect=${to.fullPath}`
     )
   }
-  NProgress.done()
 })
 
-router.afterEach(() => {})
+router.afterEach(() => {
+  NProgress.done()
+})
 
 export default router
