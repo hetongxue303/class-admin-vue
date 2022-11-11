@@ -1,5 +1,5 @@
 import * as qs from 'qs'
-import axios from '../../utils/request'
+import axios from '../utils/request'
 import { ILoginEntity } from './types'
 
 const baseAPI = `${import.meta.env.VITE_GLOB_BASIC_API}`

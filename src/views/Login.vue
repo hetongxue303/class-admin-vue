@@ -82,7 +82,7 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { useCookies } from '@vueuse/integrations/useCookies'
 import { useRoute, useRouter } from 'vue-router'
-import { getCaptcha, login } from '../api/user'
+import { getCaptcha, login } from '../api'
 import { setToken } from '../utils/auth'
 import { COOKIE_EXPIRES } from '../../settings'
 import { expires } from '../utils/date'
@@ -161,7 +161,9 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
             await initCaptcha()
             break
           case 400:
-            ElMessage.error('用户名或密码错误')
+            ElMessage.error(
+              data.message.length > 0 ? data.message : '用户名或密码错误'
+            )
             loginForm.code = ''
             loginForm.password = ''
             await initCaptcha()

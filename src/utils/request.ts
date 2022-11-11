@@ -37,14 +37,14 @@ axios.interceptors.response.use(
     return response
   },
   async (error: any) => {
-    const { response } = error
+    const { response } = await error
     if (response.status === 401 || response.data.code === 401) {
       ElNotification.warning(
         response.data.message.length > 0
           ? response.data.message
           : '您未登录，请先登录'
       )
-      removeToken()
+      await removeToken()
       await router.replace('/login')
     }
     return Promise.reject(error)

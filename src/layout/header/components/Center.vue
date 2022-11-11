@@ -38,7 +38,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '../../../store/modules/user'
-import { logout } from '../../../api/user'
+import { logout } from '../../../api'
 
 // 实例化
 const router = useRouter()
