@@ -15,12 +15,9 @@ export const getStudentList = () => {
 // 获取学生列表(分页)
 export const getStudentListPage = (data: IPage) => {
   return axios({
-    method: 'GET',
+    method: 'POST',
     url: `${studentApi}/page/list`,
-    data: qs.stringify(data),
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    }
+    data: qs.stringify(data)
   })
 }
 

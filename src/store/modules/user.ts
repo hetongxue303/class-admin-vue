@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { getToken, removeToken } from '../../utils/auth'
 import { IUserStore } from '../types'
 import { getUserInfo } from '../../api'
+import { rejects } from 'assert'
 
 export const useUserStore = defineStore('user', {
   state: (): IUserStore => {

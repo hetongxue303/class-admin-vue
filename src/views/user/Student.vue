@@ -11,7 +11,9 @@
     </el-row>
     <el-row :gutter="10" justify="end" class="table-operation">
       <el-col :span="8" :pull="13">
-        <el-button type="primary" :icon="Plus">新增</el-button>
+        <el-button type="primary" :icon="Plus" @click="handleAdd"
+          >新增</el-button
+        >
         <el-button type="success" :icon="Edit">编辑</el-button>
         <el-button type="danger" :icon="Delete">删除</el-button>
         <el-button type="warning" :icon="Bottom">导出</el-button>
@@ -88,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { getStudentList } from '../../api/user/student'
+import { getStudentListPage } from '../../api/user/student'
 import { onMounted, reactive, ref } from 'vue'
 import { IUser } from '../../api/user/types'
 import { ElTable } from 'element-plus'
@@ -109,9 +111,12 @@ const Page = reactive<IPage>({
 
 const tableData = reactive<Array<IUser>>([])
 const getData = async () => {
-  const { data } = await getStudentList()
-  data.data.forEach((item: IUser) => tableData.push(item))
+  const { data } = await getStudentListPage(Page)
+  console.log(JSON.parse(JSON.stringify(data.data)))
+  // data.data.forEach((item: IUser) => tableData.push(item))
 }
+// 处理新增
+const handleAdd = () => {}
 // 处理编辑
 const handleEdit = (index: number, row: any) => {
   console.log(index, row)

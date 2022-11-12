@@ -67,9 +67,11 @@ module.exports = {
     'no-shadow': 0,
     'no-const-assign':0,
     'no-redeclare':0,
+    'no-restricted-globals':0,
     'default-case': 0,
     'camelcase':0,
     'eslint-disable-next-line':0,
-    'no-use-before-define':0
+    'no-use-before-define':0,
+    'prefer-promise-reject-errors':0
   }
 }

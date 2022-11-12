@@ -35,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
         })
         .catch(() => {
           userStore.userLogout()
-          next('/')
+          next('/login')
         })
     } else {
       next()
