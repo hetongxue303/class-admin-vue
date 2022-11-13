@@ -5,7 +5,6 @@ import { useUserStore } from '../store/modules/user'
 import pinia from '../store'
 import NProgress from '../plugins/nProgress'
 import { getToken } from '../utils/auth'
-import { isReLogin } from '../utils/request'
 import { ElMessage } from 'element-plus' // 本地数据
 
 // 初始化路由
@@ -32,7 +31,6 @@ router.beforeEach(async (to, from, next) => {
       await userStore
         .getUserInfo()
         .then(() => {
-          isReLogin.show = false
           // TODO 生成动态路由
           next({ ...to, replace: true })
         })

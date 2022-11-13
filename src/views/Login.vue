@@ -84,11 +84,10 @@ import { useCookies } from '@vueuse/integrations/useCookies'
 import { useRoute, useRouter } from 'vue-router'
 import { getCaptcha, login } from '../api'
 import { setToken } from '../utils/auth'
-import { COOKIE_EXPIRES } from '../../settings'
+import { EXPIRE_TIME, Settings } from '../../settings'
 import { expires } from '../utils/date'
 import { TimeUnit } from '../enums/TimeUnit'
 import { decrypt, encrypt } from '../utils/jsencrypt'
-import { Const_Cookie } from '../constant/cookie'
 import { encryptMD5 } from '../hook/encryptMD5'
 
 // 实例化
@@ -182,22 +181,22 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
 const rememberMeHandler = (status: boolean) => {
   if (status) {
     cookie.set(
-      Const_Cookie.CLASS_SYSTEM_USER,
+      Settings.USER_INFO_KEY,
       encrypt(
         JSON.stringify({
           username: loginForm.username,
           password: encrypt(loginForm.password)
         })
       ),
-      { expires: expires(COOKIE_EXPIRES, TimeUnit.DAYS) }
+      { expires: new Date(EXPIRE_TIME) }
     )
   }
 }
 
 // 判断cookie中是否有数据 实现自动登录
 const isRememberMeHandler = () => {
-  if (cookie.get(Const_Cookie.CLASS_SYSTEM_USER)) {
-    const user: any = decrypt(cookie.get(Const_Cookie.CLASS_SYSTEM_USER))
+  if (cookie.get(Settings.USER_INFO_KEY)) {
+    const user: any = decrypt(cookie.get(Settings.USER_INFO_KEY))
     loginForm.username = user.username
     loginForm.password = decrypt(user.password)
     loginForm.rememberMe = true

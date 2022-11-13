@@ -1,16 +1,21 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
-import { getToken, removeToken } from './auth'
-import { Message, MessageBox } from '@element-plus/icons-vue'
-import { useUserStore } from '../store/modules/user'
-import router from '../router'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  getToken,
+  getTokenTime,
+  removeToken,
+  removeTokenTime,
+  setToken,
+  setTokenTime
+} from './auth'
+import { refreshToken } from '../api'
+import { session } from './storage'
 
-// 是否显示重新登录
-export const isReLogin = { show: false }
+let isRefresh = false
 
 axios.create({
   baseURL: import.meta.env.VITE_GLOB_BASE_URL,
-  timeout: 10 * 1000,
+  timeout: 15 * 1000,
   withCredentials: true,
   timeoutErrorMessage: '请求超时',
   headers: {
@@ -20,14 +25,43 @@ axios.create({
 
 axios.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
-    // 让每个请求携带自定义token
+    // 判断token是否快要过期
+    const currentTime = new Date().getTime()
+    const expireTime = getTokenTime()
+    if (expireTime > 0) {
+      const min = (expireTime - currentTime) / 1000 / 60
+      if (min < 10) {
+        if (!isRefresh) {
+          isRefresh = true
+          refreshToken()
+            .then((res) => {
+              if (res.status === 200 || res.data.code === 200) {
+                setToken(res.data.data.token)
+                setTokenTime(res.data.data.expireTime as number)
+                if (getToken() && config.headers) {
+                  config.headers.Authorization = getToken()
+                }
+              }
+              return config
+            })
+            .catch((error) => {
+              ElMessage.error({ message: error.message, duration: 5 * 1000 })
+            })
+            .finally(() => {
+              isRefresh = false
+            })
+        }
+      }
+    }
     if (getToken() && config.headers) {
       config.headers.Authorization = getToken()
     }
     return config
   },
   async (error: any) => {
-    await Promise.reject(error)
+    session.clear()
+    removeTokenTime()
+    return Promise.reject(error)
   }
 )
 
@@ -37,40 +71,20 @@ axios.interceptors.response.use(
   },
   async (error: any) => {
     const { response } = await error
-    switch (response.status || response.data.code) {
-      case 401:
-        if (!isReLogin.show) {
-          isReLogin.show = true
-          ElMessageBox.confirm(
-            '登录状态已过期，您可以继续留在该页面，或者重新登录',
-            '系统提示',
-            {
-              confirmButtonText: '重新登录',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }
-          )
-            .then(async () => {
-              isReLogin.show = false
-              const userStore = useUserStore()
-              userStore.userLogout()
-              window.location.replace('/login')
-            })
-            .catch(() => {
-              isReLogin.show = false
-            })
-        }
-        return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
-      case 415:
-        ElMessage.error({ message: '请求头错误', duration: 5 * 1000 })
-        return Promise.reject(new Error(response.data.message))
-      case 500:
-        ElMessage.error({ message: response.data.message, duration: 5 * 1000 })
-        return Promise.reject(new Error(response.data.message))
-      default:
-        ElNotification.error(response.data.message)
-        return Promise.reject(error)
+    if (response.status === 401 || response.data.code === 401) {
+      ElMessageBox.confirm("'用户登录信息过期，请重新登录！", '系统提示', {
+        confirmButtonText: '重新登录',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        session.clear()
+        removeToken()
+        removeTokenTime()
+        location.reload()
+      })
     }
+    // ElMessage.error({ message: error.message, duration: 5 * 1000 })
+    return Promise.reject(error)
   }
 )
 

@@ -39,3 +39,11 @@ export const getUserInfo = () => {
     url: `${baseAPI}/user/getUserInfo`
   })
 }
+
+// 刷新token
+export const refreshToken = () => {
+  return axios({
+    method: 'POST',
+    url: `${baseAPI}/user/refreshToken`
+  })
+}
