@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { UserStores } from '../../type/store'
-import { getToken, removeToken } from '../../utils/auth'
+import { getToken, removeToken, removeTokenTime } from '../../utils/auth'
 import { getUserInfo } from '../../api'
 import { usePermissionStore } from './permission'
 import pinia from '../index'
@@ -56,6 +56,7 @@ export const useUserStore = defineStore('layout', {
       this.setRoles('')
       this.setPermissions([])
       removeToken()
+      removeTokenTime()
     },
     simpleLogout() {
       this.setAuthorization('')

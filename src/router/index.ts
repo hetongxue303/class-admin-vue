@@ -4,8 +4,10 @@ import { usePermissionStore } from '../store/modules/permission'
 import { useUserStore } from '../store/modules/user'
 import pinia from '../store'
 import NProgress from '../plugins/nProgress'
-import { getToken } from '../utils/auth'
-import { ElMessage } from 'element-plus' // 本地数据
+import { getToken, removeToken } from '../utils/auth'
+import { ElMessage } from 'element-plus'
+import { IRouter } from '../api/types' // 本地数据
+import Layout from '../layout/Index.vue'
 
 // 初始化路由
 const router = createRouter({
@@ -35,8 +37,9 @@ router.beforeEach(async (to, from, next) => {
           next({ ...to, replace: true })
         })
         .catch((error) => {
-          userStore.systemLogout()
-          ElMessage.error(error)
+          // userStore.systemLogout()
+          ElMessage.error(`router:${error}`)
+          removeToken()
           next('/login')
         })
     } else {

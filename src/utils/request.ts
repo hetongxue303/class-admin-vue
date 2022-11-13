@@ -25,41 +25,39 @@ axios.create({
 
 axios.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
-    // 判断token是否快要过期
-    const currentTime = new Date().getTime()
-    const expireTime = getTokenTime()
-    if (expireTime > 0) {
-      const min = (expireTime - currentTime) / 1000 / 60
-      if (min < 10) {
-        if (!isRefresh) {
-          isRefresh = true
-          refreshToken()
-            .then((res) => {
-              if (res.status === 200 || res.data.code === 200) {
-                setToken(res.data.data.token)
-                setTokenTime(res.data.data.expireTime as number)
-                if (getToken() && config.headers) {
-                  config.headers.Authorization = getToken()
+    if (getToken() && config.headers) {
+      // 判断token是否快要过期
+      const currentTime = new Date().getTime()
+      const expireTime = getTokenTime()
+      if (expireTime > 0) {
+        const min = (expireTime - currentTime) / 1000 / 60
+        if (min < 10) {
+          if (!isRefresh) {
+            isRefresh = true
+            refreshToken()
+              .then((res) => {
+                if (res.status === 200 || res.data.code === 200) {
+                  setToken(res.data.data.token)
+                  setTokenTime(res.data.data.expireTime)
                 }
-              }
-              return config
-            })
-            .catch((error) => {
-              ElMessage.error({ message: error.message, duration: 5 * 1000 })
-            })
-            .finally(() => {
-              isRefresh = false
-            })
+              })
+              .catch((error) => {
+                ElMessage.error({ message: error.message, duration: 5 * 1000 })
+              })
+              .finally(() => {
+                isRefresh = false
+              })
+          }
         }
       }
-    }
-    if (getToken() && config.headers) {
+      // 每个请求头都带上token
       config.headers.Authorization = getToken()
     }
     return config
   },
   async (error: any) => {
     session.clear()
+    removeToken()
     removeTokenTime()
     return Promise.reject(error)
   }
@@ -70,20 +68,20 @@ axios.interceptors.response.use(
     return response
   },
   async (error: any) => {
-    const { response } = await error
-    if (response.status === 401 || response.data.code === 401) {
-      ElMessageBox.confirm("'用户登录信息过期，请重新登录！", '系统提示', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        session.clear()
-        removeToken()
-        removeTokenTime()
-        location.reload()
-      })
-    }
-    // ElMessage.error({ message: error.message, duration: 5 * 1000 })
+    // const { response } = await error
+    // if (response.status === 401 || response.data.code === 401) {
+    //   ElMessageBox.confirm("'用户登录信息过期，请重新登录！", '系统提示', {
+    //     confirmButtonText: '重新登录',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     session.clear()
+    //     removeToken()
+    //     removeTokenTime()
+    //     location.reload()
+    //   })
+    // }
+    ElMessage.error({ message: `request:${error.message}`, duration: 5 * 1000 })
     return Promise.reject(error)
   }
 )

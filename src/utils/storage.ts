@@ -1,3 +1,5 @@
+import { decrypt, encrypt } from './jsencrypt'
+
 /**
  * localStorage存储
  * @method get 获取
@@ -7,10 +9,10 @@
  */
 export const local = {
   get(key: string): any {
-    return JSON.parse(localStorage.getItem(key) as any)
+    return JSON.parse(decrypt(localStorage.getItem(key) as any))
   },
   set(key: string, value: any) {
-    localStorage.setItem(key, JSON.stringify(value))
+    localStorage.setItem(key, encrypt(JSON.stringify(value)))
   },
   remove(key: string) {
     localStorage.removeItem(key)
@@ -29,10 +31,10 @@ export const local = {
  */
 export const session = {
   get(key: string): any {
-    return JSON.parse(sessionStorage.getItem(key) as any)
+    return JSON.parse(decrypt(sessionStorage.getItem(key) as any))
   },
   set(key: string, value: any) {
-    sessionStorage.setItem(key, JSON.stringify(value))
+    sessionStorage.setItem(key, encrypt(JSON.stringify(value)))
   },
   remove(key: string) {
     sessionStorage.removeItem(key)

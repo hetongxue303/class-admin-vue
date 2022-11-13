@@ -83,12 +83,13 @@ import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { useCookies } from '@vueuse/integrations/useCookies'
 import { useRoute, useRouter } from 'vue-router'
 import { getCaptcha, login } from '../api'
-import { setToken } from '../utils/auth'
+import { getTokenTime, setToken, setTokenTime } from '../utils/auth'
 import { EXPIRE_TIME, Settings } from '../../settings'
 import { expires } from '../utils/date'
 import { TimeUnit } from '../enums/TimeUnit'
 import { decrypt, encrypt } from '../utils/jsencrypt'
 import { encryptMD5 } from '../hook/encryptMD5'
+import { session } from '../utils/storage'
 
 // 实例化
 const cookie = useCookies()
@@ -138,8 +139,8 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
         switch (data.code as number) {
           case 200: {
             // rememberMeHandler(loginForm.rememberMe)
-            // 存储token
-            setToken(data.data.token as string)
+            setToken(data.data.token)
+            setTokenTime(data.data.expireTime)
             ElMessage.success('登陆成功')
             await router.push(parameter.redirect || '/')
             break
