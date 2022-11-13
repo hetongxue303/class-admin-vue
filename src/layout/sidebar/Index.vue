@@ -21,11 +21,11 @@ import { useRoute } from 'vue-router'
 
 import MenuItem from './components/MenuItem.vue'
 import Logo from './components/Logo.vue'
-import { useUserStore } from '../../store/modules/user'
+import { usePermissionStore } from '../../store/modules/permission'
 import { IMenuItem } from '../types'
 
 const route = useRoute()
-const userStore = useUserStore()
+const permissionStore = usePermissionStore()
 
 const menus: Array<IMenuItem> = [
   {
@@ -34,7 +34,7 @@ const menus: Array<IMenuItem> = [
     path: '/dashboard'
   }
 ]
-userStore.getMenus.forEach((menu) => menus.push(menu))
+permissionStore.getMenus.forEach((menu) => menus.push(menu))
 
 defineProps({
   isCollapse: { type: Boolean, required: true, default: false }

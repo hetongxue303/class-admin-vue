@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-aside>
-      <side-bar :is-collapse="userStore.getCollapse" />
+      <side-bar :is-collapse="appStore.getCollapse" />
     </el-aside>
     <el-container>
       <el-header>
@@ -25,9 +25,9 @@ import Header from './header/Index.vue'
 import Footer from './footer/Index.vue'
 import Tabs from '../components/Tabs/Index.vue'
 
-import { useUserStore } from '../store/modules/user'
+import { useAppStore } from '../store/modules/app'
 
-const userStore = useUserStore()
+const appStore = useAppStore()
 </script>
 
 <style scoped lang="scss">

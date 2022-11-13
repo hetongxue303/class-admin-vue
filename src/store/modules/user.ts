@@ -1,59 +1,65 @@
 import { defineStore } from 'pinia'
+import { UserStores } from '../../type/store'
 import { getToken, removeToken } from '../../utils/auth'
-import { IUserStore } from '../types'
 import { getUserInfo } from '../../api'
-import { rejects } from 'assert'
+import { usePermissionStore } from './permission'
+import pinia from '../index'
 
-export const useUserStore = defineStore('user', {
-  state: (): IUserStore => {
+const permissionStore = usePermissionStore(pinia)
+
+export const useUserStore = defineStore('layout', {
+  state: (): UserStores => {
     return {
       Authorization: getToken() || '',
-      collapse: false,
-      role: '',
-      menus: [],
-      routers: []
+      avatar: '',
+      roles: '',
+      permissions: [],
+      username: ''
     }
   },
   getters: {
-    // 获取折叠状态
-    getCollapse: (state) => state.collapse,
-    // 获取角色信息
-    getRole: (state) => state.role,
-    // 获取菜单信息
-    getMenus: (state) => state.menus,
-    // 获取路由信息
-    getRouters: (state) => state.routers
+    getAuthorization: (state) => state.Authorization,
+    getRoles: (state) => state.roles,
+    getUsername: (state) => state.username,
+    getPermissions: (state) => state.permissions,
+    getAvatar: (state) => state.avatar
   },
   actions: {
-    // 设置折叠面板状态
-    setCollapse(status: boolean) {
-      this.collapse = status
+    setAuthorization(Authorization: string) {
+      this.Authorization = Authorization
     },
-    // 设置菜单信息
-    setMenus(menus: any) {
-      this.menus = menus
+    setRoles(roles: string) {
+      this.roles = roles
     },
-    // 设置路由信息
-    setRouters(routers: any) {
-      this.routers = routers
+    setUsername(username: string) {
+      this.username = username
     },
-    setRole(name: string) {
-      this.role = name
+    setPermissions(permissions: string[]) {
+      this.permissions = permissions
     },
-    // 用户注销
-    userLogout() {
-      removeToken()
-      this.$reset()
+    setAvatar(avatar: string) {
+      this.avatar = avatar
     },
-    // 获取用户信息
     async getUserInfo() {
       const { data } = await getUserInfo()
-      const userinfo = data.data
-      if (userinfo) {
-        this.setRole(userinfo.role)
-        this.setMenus(userinfo.menus)
-        this.setRouters(userinfo.routers)
+      if (data.data.role) {
+        this.setRoles(data.data.role)
+        this.setPermissions(['123', '456'])
+        permissionStore.setMenus(data.data.menus)
+        permissionStore.setRouters(data.data.routers)
       }
+    },
+    systemLogout() {
+      this.setAuthorization('')
+      this.setAvatar('')
+      this.setUsername('')
+      this.setRoles('')
+      this.setPermissions([])
+      removeToken()
+    },
+    simpleLogout() {
+      this.setAuthorization('')
+      removeToken()
     }
   },
   persist: {

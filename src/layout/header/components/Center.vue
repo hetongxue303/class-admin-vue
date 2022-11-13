@@ -22,12 +22,18 @@
   </el-dropdown>
 
   <!--对话框-->
-  <el-dialog v-model="dialogVisible" title="确认退出" width="35%">
-    <span>是否确认退出系统？</span>
+  <el-dialog
+    v-model="dialogVisible"
+    title="确认退出"
+    width="35%"
+    top="0"
+    align-center
+  >
+    <span>您确认确认退出系统吗？</span>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">否</el-button>
-        <el-button type="primary" @click="handlerLogout">是</el-button>
+        <el-button @click="dialogVisible = false">返回</el-button>
+        <el-button type="success" @click="handlerLogout">确认</el-button>
       </span>
     </template>
   </el-dialog>
@@ -50,7 +56,7 @@ const handlerLogout = async () => {
   const { data } = await logout()
   switch (data.code as number) {
     case 200:
-      userStore.userLogout()
+      userStore.systemLogout()
       ElMessage.success('注销成功')
       await router.replace('/login')
       break

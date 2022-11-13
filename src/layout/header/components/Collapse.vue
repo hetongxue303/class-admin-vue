@@ -1,6 +1,6 @@
 <template>
   <!--折叠组件-->
-  <div class="collapse-content" @click="userStore.setCollapse(!isCollapse)">
+  <div class="collapse-content" @click="appStore.setCollapse(!isCollapse)">
     <el-icon :size="28">
       <component is="expand" v-if="isCollapse" />
       <component is="fold" v-else />
@@ -10,12 +10,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useUserStore } from '../../../store/modules/user'
+import { useAppStore } from '../../../store/modules/app'
 
-const userStore = useUserStore()
+const appStore = useAppStore()
 
 const isCollapse = computed(() => {
-  return userStore.getCollapse
+  return appStore.getCollapse
 })
 </script>
 
