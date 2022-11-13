@@ -140,7 +140,7 @@ const loginHandler = async (formEl: FormInstance | undefined) => {
           case 200: {
             // rememberMeHandler(loginForm.rememberMe)
             setToken(data.data.token)
-            setTokenTime(data.data.expireTime)
+            setTokenTime(new Date().getTime() + data.data.expireTime)
             ElMessage.success('登陆成功')
             await router.push(parameter.redirect || '/')
             break

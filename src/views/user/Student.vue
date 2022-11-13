@@ -103,11 +103,11 @@ const handleSizeChange = () => {
 const handleCurrentChange = () => {
   console.log(Page.currentPage)
 }
-const Page = reactive<IPage>({
+const Page: IPage = {
   query: '',
   currentPage: 1,
   pageSize: 10
-})
+}
 
 const tableData = reactive<Array<IUser>>([])
 const getData = async () => {
